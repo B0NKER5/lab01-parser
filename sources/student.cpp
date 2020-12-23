@@ -7,7 +7,7 @@
 
 std::string Student::get_name(){
     return name;
-};
+}
 
 std::string Student::get_group(){
   if (group.type() == typeid(std::string)) {
@@ -17,7 +17,7 @@ std::string Student::get_group(){
   } else {
     return std::to_string(std::any_cast<size_t>(group));
   }
-};
+}
 
 std::string Student::get_avg(){
   if (avg.type() == typeid(std::string)) {
@@ -29,7 +29,7 @@ std::string Student::get_avg(){
   } else {
     return std::to_string(std::any_cast<double>(avg)).substr(0, 4);
   }
-};
+}
 
 std::string Student::get_debt(){
   if (debt.type() == typeid(std::string)) {
@@ -43,7 +43,7 @@ std::string Student::get_debt(){
     return std::to_string(std::any_cast<std::vector<std::string>>(debt).size()) +
            " items";
   }
-};
+}
 
 Student_prepare::Student_prepare(std::vector<Student>):width_name(4),width_group(5),width_avg(3),width_debt(4) {
   for (auto & Student : student) {
@@ -60,7 +60,7 @@ Student_prepare::Student_prepare(std::vector<Student>):width_name(4),width_group
       width_group = Student.get_group().length();
     }
   }
-};
+}
 
 std::string Student_prepare::get_students_table() {
   std::stringstream ss;
@@ -87,7 +87,7 @@ std::string Student_prepare::get_students_table() {
      << "|" << std::setw(width_debt + 2) << std::setfill('-') << ""
      << std::setw(1) << "|";
   return ss.str();
-};
+}
 
 std::string Student_prepare::get_student_string(int number_student) {
   std::stringstream ss;
@@ -99,7 +99,7 @@ std::string Student_prepare::get_student_string(int number_student) {
      << std::setw(3) << " | " << std::setw(width_debt) << std::left
      << student[number_student].get_debt() << std::setw(2) << " |";
   return ss.str();
-};
+}
 
 std::size_t Student_prepare::get_name_width() { return width_name; }
 std::size_t Student_prepare::get_group_width() { return width_group; }
