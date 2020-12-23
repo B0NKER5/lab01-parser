@@ -36,8 +36,8 @@ add_library(${PROJECT_NAME} STATIC
         # enum your files and delete this comment
         ${CMAKE_CURRENT_SOURCE_DIR}/sources/student.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/sources/parser-json.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/parser-json.hpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/include/student.hpp
+#        ${CMAKE_CURRENT_SOURCE_DIR}/include/parser-json.hpp
+#        ${CMAKE_CURRENT_SOURCE_DIR}/include/student.hpp
         )
 
 #add_executable(tests
@@ -50,17 +50,24 @@ target_include_directories(${PROJECT_NAME} PUBLIC
         "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
         "$<INSTALL_INTERFACE:include>"
         )
-
+#target_include_directories(${PROJECT_NAME}
+#        PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+#        )
 target_link_libraries(${PROJECT_NAME} nlohmann_json::nlohmann_json)
 
 if(BUILD_TESTS)
   add_executable(tests
           # TODO: enum your files and delete this comment
           ${CMAKE_CURRENT_SOURCE_DIR}/tests/test.cpp
-          ${CMAKE_CURRENT_SOURCE_DIR}/sources/student.cpp
-          ${CMAKE_CURRENT_SOURCE_DIR}/sources/parser-json.cpp
           )
-  target_link_libraries(tests ${PROJECT_NAME} GTest::gtest_main)
+  target_include_directories(tests PUBLIC
+          "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>"
+          "$<INSTALL_INTERFACE:include>"
+          )
+#  target_include_directories(tests
+#          PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include
+#          )
+  target_link_libraries(tests GTest::gtest_main ${PROJECT_NAME})
   enable_testing()
   add_test(NAME unit_tests COMMAND tests)
 endif()
